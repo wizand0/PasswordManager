@@ -15,4 +15,9 @@ v0.5b no encryption, no authorization. Basic functionality
 ## Very long-term TODO
 - exporting a database
 - importing a database
-- 
+
+## Skills
+- Java
+- Room Database
+- SQLite
+- RecyclerView
