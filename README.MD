@@ -3,12 +3,12 @@
 
 The application is completely offline and does not require permissions to access the network.
 
-v0.5b no encryption, no authorization. Basic functionality
+v0.6b no encryption, no authorization. Basic functionality
 
 ## TODO
 - User authorization
 - Initial activation for the initial setup
-- SQLite encryption
+- SQLite fields encryption
 - Custom fields for data entry
 - beautiful and user-friendly UI
 

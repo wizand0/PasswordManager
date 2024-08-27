@@ -1,27 +1,50 @@
 package ru.wizand.passwordmanager.db.entity;
 
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "passwords")
 public class Password {
 
-
-    public static final String TABLE_NAME = "password";
-    public static final String COLUMN_ID = "password_id";
-    public static final String COLUMN_URL = "password_url";
-    public static final String COLUMN_PASSWORD = "password_password";
-    public static final String COLUMN_ADDITIONAL = "password_additional";
-
-
+    // 2 - Variables
+    @ColumnInfo(name = "password_id")
+    @PrimaryKey(autoGenerate = true)
     private int pass_id;
+
+    @ColumnInfo(name = "password_name")
+    private String name;
+
+    @ColumnInfo(name = "password_url")
     private String url;
+
+    @ColumnInfo(name = "password_login")
+    private String login;
+
+    @ColumnInfo(name = "password_password")
     private String password;
+
+    @ColumnInfo(name = "password_additional")
     private String additional;
 
-    public Password(int pass_id, String url, String password, String additional) {
+    // 3 - Constructor
+    @Ignore
+    public Password() {
+
+    }
+
+    public Password(int pass_id, String name, String url, String login, String password, String additional) {
         this.pass_id = pass_id;
+        this.name = name;
         this.url = url;
+        this.login = login;
         this.password = password;
         this.additional = additional;
     }
 
+    // 4 - Getters and Setters
     public int getPass_id() {
         return pass_id;
     }
@@ -30,12 +53,27 @@ public class Password {
         this.pass_id = pass_id;
     }
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -53,4 +91,6 @@ public class Password {
     public void setAdditional(String additional) {
         this.additional = additional;
     }
+
+
 }
