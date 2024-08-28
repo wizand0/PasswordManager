@@ -22,6 +22,7 @@
             android:background="#A5C4F4"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
@@ -45,5 +46,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        android:src="@drawable/ic_action_name_lock"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

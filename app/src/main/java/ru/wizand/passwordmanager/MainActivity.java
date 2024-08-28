@@ -1,7 +1,13 @@
 package ru.wizand.passwordmanager;
 
+import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateKeyFromPassword;
+import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateSalt;
+import static ru.wizand.passwordmanager.AesCbcWithIntegrity.saltString;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -21,9 +27,11 @@ import androidx.room.Room;
 
 import android.text.TextUtils;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 import ru.wizand.passwordmanager.adapter.PasswordsAdapter;
@@ -38,11 +46,22 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PasswordsAppDatabase passwordsAppDatabase;
 
+    private String masterPassText;
+    private String masterEncryptKey;
+    boolean isMasterPass;
+    boolean isAuthorization;
+    SharedPreferences prefs;
+
+    private String userPassText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prefs = getSharedPreferences("ru.wizand.passwordmanager", MODE_PRIVATE);
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,7 +95,233 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton lock = (FloatingActionButton) findViewById(R.id.lock);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        masterEncryptKey = "";
+        userPassText = "";
+        // Fetching the stored data from the SharedPreference
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // При первом запуске (или если юзер удалял все данные приложения)
+            // мы попадаем сюда. Делаем что-то
+            //и после действия записывам false в переменную firstrun
+            //Итого при следующих запусках этот код не вызывается.
+
+            Log.i("testing_FirstRun_onResume_key_1", masterEncryptKey);
+            Log.i("testing_FirstRun_onResume_userPass_1", userPassText);
+
+            setupMasterPass();
+
+            prefs.edit().putBoolean("firstrun", false).apply();
+
+
+            Log.i("testing_FirstRun_onResume_key_2", masterEncryptKey);
+            Log.i("testing_FirstRun_onResume_userPass_2", userPassText);
+
+
+        }
+        else {
+            do {
+                checkMasterPass();
+            }while (isAuthorization = false);
+        }
+
+        String passShared = prefs.getString("userPassText", "");
+        String keyShared = prefs.getString("key", "");
+        Log.i("testing_onResume_key_fromXML", keyShared);
+        Log.i("testing_onResume_pass_fromXML", passShared);
+
+        boolean equals = userPassText.equals(masterPassText);
+        Log.i("testing_Equals", Boolean.toString(equals));
+
+        boolean stringIsNotEmpty = passShared != null && !keyShared.isEmpty();
+
+        Log.i("testing_stringIsNotEmpty", Boolean.toString(stringIsNotEmpty));
+
+        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i("testing_onPause_key_masterKey", masterEncryptKey);
+        Log.i("testing_onPause_key_userPass", userPassText);
+        String passShared = prefs.getString("userPassText", "");
+        String keyShared = prefs.getString("key", "");
+        Log.i("testing_onPause_key_fromXML", keyShared);
+        Log.i("testing_onPause_pass_fromXML", passShared);
+        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isAuthorization = false;
+
+        Log.i("testing_onDestroy_key_masterKey", masterEncryptKey);
+        Log.i("testing_onDestroy_key_userPass", userPassText);
+
+        userPassText = "";
+
+        prefs.edit().putString("userPassText", userPassText).apply();
+
+        String passShared = prefs.getString("userPassText", "");
+        String keyShared = prefs.getString("key", "");
+        Log.i("testing_onDestroy_key_fromXML", keyShared);
+        Log.i("testing_onDestroy_pass_fromXML", passShared);
+        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.i("testing_onStop_key_masterKey", masterEncryptKey);
+        Log.i("testing_onStop_key_userPass", userPassText);
+        String passShared = prefs.getString("userPassText", "");
+        String keyShared = prefs.getString("key", "");
+        Log.i("testing_onStop_key_fromXML", keyShared);
+        Log.i("testing_onStop_pass_fromXML", passShared);
+
+    }
+
+    //For
+    private void checkMasterPass() {
+        // First running app and encryption the MASTERPASSWORD
+        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
+        masterpassBuilder.setTitle("Enter your Password");
+        //Set up the input
+        final EditText inputMaster = new EditText(this);
+        inputMaster.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        masterpassBuilder.setView(inputMaster);
+
+        masterEncryptKey = prefs.getString("key", "");
+
+
+
+        //Set up the buttons
+        masterpassBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Checking the input and master password
+                userPassText = inputMaster.getText().toString();
+
+
+
+                String pass = encryptString(userPassText);
+
+                prefs.edit().putString("userPassText", pass).apply();
+
+                String keyShared = prefs.getString("key", "");
+
+
+                isAuthorization = pass.equals(keyShared);
+                Log.i("testing_isAuthorization_method", Boolean.toString(isAuthorization));
+
+
+//                userPassText = masterEncryptKey;
+                popupMessage(masterEncryptKey, userPassText);
+
+            }
+        });
+
+        masterpassBuilder.show();
+    }
+
+
+    private void setupMasterPass() {
+        // First running app and encryption the MASTERPASSWORD
+        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
+        masterpassBuilder.setTitle("Enter Master Password");
+        //Set up the input
+        final EditText inputMaster = new EditText(this);
+        inputMaster.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        masterpassBuilder.setView(inputMaster);
+        //Set up the buttons
+        masterpassBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                masterPassText = inputMaster.getText().toString();
+
+                Log.i("testing_input_master", masterPassText);
+
+                isMasterPass = true;
+                isAuthorization = true;
+
+                String key = encryptString(masterPassText);
+
+                Log.i("testing_input_key", key);
+
+                prefs.edit().putString("key", key).apply();
+                prefs.edit().putString("userPassText", key).apply();
+
+
+                popupMessage(masterPassText, key);
+                masterEncryptKey = key;
+                dialog.dismiss();
+            }
+        });
+
+        masterpassBuilder.show();
+    }
+
+
+    //---------------------------------------------------------------------------------------------
+    // This is popup for testing/ It shows password, salt and secret key. NOT FOR RELEASE
+    private void popupMessage(String string1, String string2) {
+        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
+        masterpassBuilder.setTitle("Your passwords are:");
+        //Set up the input
+        final TextView passText = new TextView(this);
+        passText.setTextSize(20);
+
+        // Generating output
+        passText.setText("Pass1: " + string1 + "\n Pass2: " + string2);
+        masterpassBuilder.setView(passText);
+
+        masterpassBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        masterpassBuilder.show();
+
+    }
+
+    //---------------------------------------------------------------------------------------------
+    //Encrypt string
+
+    private String encryptString(String inputString){
+
+        //Generating salt
+//         String salt = null;
+        String salt = "4ooMz5/R/xl8df9Iife5GWmBuYaqBa54ESgTnZUOpkgNWKQ82i8OEMqoK/UwfGx8+DaRgCjidmqHYcCeL2OG3SqWjDAqukJRWCAAiBZGUGH6FdB4VqzTrg2Gp9Tbu/rbgt4tUflbPv9qQZ4C4aYs0hZBIKIguhuHqXybl0+ZvzQ=";
+//        try {
+//            salt = saltString(generateSalt());
+//            Log.i("testing_input_key", salt);
+//        } catch (GeneralSecurityException e) {
+//            throw new RuntimeException(e);
+//        }
+        //Generating Master key
+        String key = null;
+        try {
+            key = String.valueOf(generateKeyFromPassword(String.valueOf(inputString), salt));
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
+        return key;
     }
 
     public void addAndEditPasswords(final boolean isUpdated,final Password password,final int position) {
