@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PasswordManager"
+rootProject.name = "Password Manager"
 include ':app'

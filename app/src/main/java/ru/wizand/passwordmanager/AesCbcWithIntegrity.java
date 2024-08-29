@@ -738,7 +738,7 @@ public class AesCbcWithIntegrity {
                     if (ALLOW_BROKEN_PRNG) {
                         Log.w(PrngFixes.class.getSimpleName(),
                                 "SecureRandom.getInstance(\"SHA1PRNG\") backed by wrong" + " Provider: "
-                                + rng2.getProvider().getClass());
+                                        + rng2.getProvider().getClass());
                         return;
                     } else {
                         throw new SecurityException(

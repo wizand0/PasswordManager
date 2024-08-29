@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ru.wizand.passwordmanager.MainActivity;
+import ru.wizand.passwordmanager.MainScreenActivity;
 import ru.wizand.passwordmanager.R;
 import ru.wizand.passwordmanager.db.entity.Password;
 
@@ -20,7 +21,7 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
     // 1 - Variables
     private Context context;
     private ArrayList<Password> passwordArrayList;
-    private MainActivity mainActivity;
+    private MainScreenActivity mainActivity;
 
     // 2 - ViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -40,7 +41,7 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
         }
     }
 
-    public PasswordsAdapter(Context context, ArrayList<Password> passwords, MainActivity mainActivity) {
+    public PasswordsAdapter(Context context, ArrayList<Password> passwords, MainScreenActivity mainActivity) {
         this.context = context;
         this.passwordArrayList = passwords;
         this.mainActivity = mainActivity;
