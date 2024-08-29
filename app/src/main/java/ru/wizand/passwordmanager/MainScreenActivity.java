@@ -45,7 +45,7 @@ public class MainScreenActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PasswordsAppDatabase passwordsAppDatabase;
     FloatingActionButton fab;
-    FloatingActionButton lock;
+
 
 
     private String masterPassText;
@@ -54,7 +54,7 @@ public class MainScreenActivity extends AppCompatActivity {
     boolean isAuthorization;
     SharedPreferences prefs;
 
-    private String userPassText;
+    private String key;
 
 
     @Override
@@ -97,7 +97,7 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
-        lock = (FloatingActionButton) findViewById(R.id.lock);
+
     }
 
 
@@ -119,11 +119,6 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onDestroy();
         isAuthorization = false;
 
-
-//        userPassText = "";
-//
-//        prefs.edit().putString("userPassText", userPassText).apply();
-
     }
 
     @Override
@@ -131,103 +126,7 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onStop();
         isAuthorization = false;
 
-
-//        userPassText = "";
-//
-//        prefs.edit().putString("userPassText", userPassText).apply();
-
     }
-
-//    //For
-//    private void checkMasterPass() {
-//        // First running app and encryption the MASTERPASSWORD
-//        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
-//        masterpassBuilder.setTitle("Enter your Password");
-//        //Set up the input
-//        final EditText inputMaster = new EditText(this);
-//        inputMaster.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//        masterpassBuilder.setView(inputMaster);
-//
-//        Log.i("testing_Checking", "_________________________");
-//
-//        masterEncryptKey = prefs.getString("key", "");
-//        Log.i("testing_masterKey", masterEncryptKey);
-//
-//
-//
-//
-//    }
-//
-//
-//    private void setupMasterPass() {
-//        // First running app and encryption the MASTERPASSWORD
-//        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
-//        masterpassBuilder.setTitle("Enter Master Password");
-//        //Set up the input
-//        final EditText inputMaster = new EditText(this);
-//        inputMaster.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//        masterpassBuilder.setView(inputMaster);
-//        //Set up the buttons
-//        masterpassBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                masterPassText = inputMaster.getText().toString();
-//
-//                Log.i("testing_input_master", masterPassText);
-//
-//                isMasterPass = true;
-//                isAuthorization = true;
-//
-//                String key = encryptionKey(masterPassText);
-//
-//                Log.i("testing_input_key", key);
-//
-//                prefs.edit().putString("key", key).apply();
-//                prefs.edit().putString("userPassText", key).apply();
-//
-//
-//                popupMessage(masterPassText, key);
-//                masterEncryptKey = key;
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        masterpassBuilder.show();
-//    }
-//
-//
-//    //---------------------------------------------------------------------------------------------
-//    // This is popup for testing/ It shows password, salt and secret key. NOT FOR RELEASE
-//    private void popupMessage(String string1, String string2) {
-//        AlertDialog.Builder masterpassBuilder = new AlertDialog.Builder(this);
-//        masterpassBuilder.setTitle("Your passwords are:");
-//        //Set up the input
-//        final TextView passText = new TextView(this);
-//        passText.setTextSize(20);
-//
-//        // Generating output
-//        if (isAuthorization) {
-//            passText.setText("Right pass");
-//        }
-//        else {
-//            passText.setText("Wrong pass");
-//        }
-////        passText.setText("Pass1: " + string1 + "\n Pass2: " + string2);
-//        masterpassBuilder.setView(passText);
-//
-//        masterpassBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        masterpassBuilder.show();
-//
-//    }
-//
-//    //---------------------------------------------------------------------------------------------
-//    //Encrypt string
 
 
     public void addAndEditPasswords(final boolean isUpdated,final Password password,final int position) {
@@ -246,6 +145,8 @@ public class MainScreenActivity extends AppCompatActivity {
         final EditText passwordAdditional = view.findViewById(R.id.additional);
 
         passwordTitle.setText(!isUpdated ? "Add New Password" : "Edit Password");
+
+
 
 
         if (isUpdated && password != null){
@@ -295,6 +196,7 @@ public class MainScreenActivity extends AppCompatActivity {
                             passwordPassword.getText().toString(), passwordAdditional.getText().toString(), position);
 
                 }else{
+
                     CreatePassword(newPassword.getText().toString(), passwordUrl.getText().toString(), passwordLogin.getText().toString(),
                             passwordPassword.getText().toString(), passwordAdditional.getText().toString());
 

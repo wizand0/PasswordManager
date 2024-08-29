@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
 //            salt = "4ooMz5/R/xl8df9Iife5GWmBuYaqBa54ESgTnZUOpkgNWKQ82i8OEMqoK/UwfGx8+DaRgCjidmqHYcCeL2OG3SqWjDAqukJRWCAAiBZGUGH6FdB4VqzTrg2Gp9Tbu/rbgt4tUflbPv9qQZ4C4aYs0hZBIKIguhuHqXybl0+ZvzQ=";
 
 
-            title.setText("Restration");
+            title.setText("Registration");
 
-            btn.setText("Register");
+            btn.setText("Register!");
 
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         byte[] saltByte = AesCbcWithIntegrity.generateSalt();
-                        Log.i("testing_saltByte", Arrays.toString(saltByte));
+
                         salt = (String)saltString(saltByte);
-                        Log.i("testing_saltString", salt);
+
                     } catch (GeneralSecurityException e) {
                         throw new RuntimeException(e);
                     }
@@ -100,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
                     prefs.edit().putBoolean("firstrun", false).apply();
 
                     String pass = encryptingKey(userPass, salt);
+
+
+                    prefs.edit().putString("key", pass);
+
+
+
+
                     register(userPass, pass);
                     isLoggedIn = true;
                 }
@@ -112,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             String getSalt = prefs.getString("salt", "");
             title.setText("Login");
 
-            btn.setText("Login");
+            btn.setText("Login!");
 
             inputMasterLogin = findViewById(R.id.login);
 
