@@ -13,13 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -101,8 +97,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        masterEncryptKey = "";
-        userPassText = "";
+//        masterEncryptKey = "";
+//        userPassText = "";
+        Log.i("testing_izAuth_onresumeStart", Boolean.toString(isAuthorization));
+
+        String userPassText = prefs.getString("userPassText", "");
+        String masterEncryptKey = prefs.getString("key", "");
+
+        isAuthorization = userPassText.equals(masterEncryptKey);
+
+        Log.i("testing_izAuth_onresume_2_Start", Boolean.toString(isAuthorization));
         // Fetching the stored data from the SharedPreference
 
         if (prefs.getBoolean("firstrun", true)) {
@@ -114,50 +118,32 @@ public class MainActivity extends AppCompatActivity {
             Log.i("testing_FirstRun_onResume_key_1", masterEncryptKey);
             Log.i("testing_FirstRun_onResume_userPass_1", userPassText);
 
+            try {
+                generatingSalt();
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
+            }
+
             setupMasterPass();
 
             prefs.edit().putBoolean("firstrun", false).apply();
 
 
-            Log.i("testing_FirstRun_onResume_key_2", masterEncryptKey);
-            Log.i("testing_FirstRun_onResume_userPass_2", userPassText);
-
 
         }
         else {
-            do {
+
+            if (!isAuthorization){
                 checkMasterPass();
-            }while (isAuthorization = false);
         }
 
-        String passShared = prefs.getString("userPassText", "");
-        String keyShared = prefs.getString("key", "");
-        Log.i("testing_onResume_key_fromXML", keyShared);
-        Log.i("testing_onResume_pass_fromXML", passShared);
-
-        boolean equals = userPassText.equals(masterPassText);
-        Log.i("testing_Equals", Boolean.toString(equals));
-
-        boolean stringIsNotEmpty = passShared != null && !keyShared.isEmpty();
-
-        Log.i("testing_stringIsNotEmpty", Boolean.toString(stringIsNotEmpty));
-
-        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
-
+        }
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        Log.i("testing_onPause_key_masterKey", masterEncryptKey);
-        Log.i("testing_onPause_key_userPass", userPassText);
-        String passShared = prefs.getString("userPassText", "");
-        String keyShared = prefs.getString("key", "");
-        Log.i("testing_onPause_key_fromXML", keyShared);
-        Log.i("testing_onPause_pass_fromXML", passShared);
-        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
 
     }
 
@@ -166,31 +152,22 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         isAuthorization = false;
 
-        Log.i("testing_onDestroy_key_masterKey", masterEncryptKey);
-        Log.i("testing_onDestroy_key_userPass", userPassText);
 
         userPassText = "";
 
         prefs.edit().putString("userPassText", userPassText).apply();
-
-        String passShared = prefs.getString("userPassText", "");
-        String keyShared = prefs.getString("key", "");
-        Log.i("testing_onDestroy_key_fromXML", keyShared);
-        Log.i("testing_onDestroy_pass_fromXML", passShared);
-        Log.i("testing_isAuth", Boolean.toString(isAuthorization));
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        isAuthorization = false;
 
-        Log.i("testing_onStop_key_masterKey", masterEncryptKey);
-        Log.i("testing_onStop_key_userPass", userPassText);
-        String passShared = prefs.getString("userPassText", "");
-        String keyShared = prefs.getString("key", "");
-        Log.i("testing_onStop_key_fromXML", keyShared);
-        Log.i("testing_onStop_pass_fromXML", passShared);
+
+        userPassText = "";
+
+        prefs.edit().putString("userPassText", userPassText).apply();
 
     }
 
@@ -218,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                String pass = encryptString(userPassText);
+                String pass = encryptKey(userPassText);
 
                 prefs.edit().putString("userPassText", pass).apply();
 
@@ -226,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 isAuthorization = pass.equals(keyShared);
-                Log.i("testing_isAuthorization_method", Boolean.toString(isAuthorization));
+
 
 
 //                userPassText = masterEncryptKey;
@@ -258,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 isMasterPass = true;
                 isAuthorization = true;
 
-                String key = encryptString(masterPassText);
+                String key = encryptKey(masterPassText);
 
                 Log.i("testing_input_key", key);
 
@@ -286,7 +263,13 @@ public class MainActivity extends AppCompatActivity {
         passText.setTextSize(20);
 
         // Generating output
-        passText.setText("Pass1: " + string1 + "\n Pass2: " + string2);
+        if (isAuthorization) {
+            passText.setText("Right pass");
+        }
+        else {
+            passText.setText("Wrong pass");
+        }
+//        passText.setText("Pass1: " + string1 + "\n Pass2: " + string2);
         masterpassBuilder.setView(passText);
 
         masterpassBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -303,25 +286,34 @@ public class MainActivity extends AppCompatActivity {
     //---------------------------------------------------------------------------------------------
     //Encrypt string
 
-    private String encryptString(String inputString){
+    private String encryptKey(String inputString){
 
         //Generating salt
 //         String salt = null;
-        String salt = "4ooMz5/R/xl8df9Iife5GWmBuYaqBa54ESgTnZUOpkgNWKQ82i8OEMqoK/UwfGx8+DaRgCjidmqHYcCeL2OG3SqWjDAqukJRWCAAiBZGUGH6FdB4VqzTrg2Gp9Tbu/rbgt4tUflbPv9qQZ4C4aYs0hZBIKIguhuHqXybl0+ZvzQ=";
+//        String salt = "4ooMz5/R/xl8df9Iife5GWmBuYaqBa54ESgTnZUOpkgNWKQ82i8OEMqoK/UwfGx8+DaRgCjidmqHYcCeL2OG3SqWjDAqukJRWCAAiBZGUGH6FdB4VqzTrg2Gp9Tbu/rbgt4tUflbPv9qQZ4C4aYs0hZBIKIguhuHqXybl0+ZvzQ=";
 //        try {
 //            salt = saltString(generateSalt());
-//            Log.i("testing_input_key", salt);
+//            Log.i("testing_input_salt", salt);
 //        } catch (GeneralSecurityException e) {
 //            throw new RuntimeException(e);
 //        }
         //Generating Master key
         String key = null;
+        String gettingSalt = prefs.getString("salt", "");
         try {
-            key = String.valueOf(generateKeyFromPassword(String.valueOf(inputString), salt));
+            key = String.valueOf(generateKeyFromPassword(String.valueOf(inputString), gettingSalt));
         } catch (GeneralSecurityException e) {
             throw new RuntimeException(e);
         }
         return key;
+    }
+
+    private void generatingSalt() throws GeneralSecurityException {
+        String salt = "";
+        salt = saltString(generateSalt());
+        String output = (String) salt;
+        Log.i("testing_input_salt", salt);
+        prefs.edit().putString("salt", output).apply();
     }
 
     public void addAndEditPasswords(final boolean isUpdated,final Password password,final int position) {
