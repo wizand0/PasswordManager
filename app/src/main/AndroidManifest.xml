@@ -13,6 +13,12 @@
         android:theme="@style/Theme.PasswordManager"
         tools:targetApi="31">
         <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
+            android:name=".PassGenerator"
+            android:exported="false" />
+        <activity
             android:name=".MainScreenActivity"
             android:exported="false" />
         <activity

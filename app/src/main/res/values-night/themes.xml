@@ -3,13 +3,17 @@
     <style name="Base.Theme.PasswordManager" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorSecondary">@color/color_login_light</item>
+
+
     </style>
 
     <style name="AppTheme.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay"
-        parent="ThemeOverlay.AppCompat.Light" />
+        parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="Theme.PasswordManager" parent="Base.Theme.PasswordManager" />
 </resources>

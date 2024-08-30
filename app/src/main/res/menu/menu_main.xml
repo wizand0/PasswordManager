@@ -10,6 +10,18 @@
         android:title="Settings"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/generator"
+        android:orderInCategory="100"
+        android:title="Password generator"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:title="About"
+        app:showAsAction="never"/>
+
 
 
 </menu>

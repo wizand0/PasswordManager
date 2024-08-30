@@ -27,6 +27,10 @@ v1.1 no filds encryption. Basic functionality
 - SQLite
 - RecyclerView
 
+## Credits
+Password generator - https://stackoverflow.com/users/1123501/georgios-syngouroglou
+java-aes-crypto - https://github.com/tozny
+
 ## Versions
 v1.2 - refactoring
 

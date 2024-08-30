@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PassGenerator">
+
+    <TextView
+        android:id="@+id/titlePassGenerator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Password Generator"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Length"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlePassGenerator" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:hint="Enter the length"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewLength"
+        app:layout_constraintStart_toEndOf="@+id/textViewLength"
+        app:layout_constraintTop_toTopOf="@+id/textViewLength" />
+
+    <TextView
+        android:id="@+id/TextViewUpper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Use Upper"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewLength"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLength" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonUpper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewUpper"
+        app:layout_constraintStart_toEndOf="@+id/TextViewUpper"
+        app:layout_constraintTop_toTopOf="@+id/TextViewUpper" />
+
+    <TextView
+        android:id="@+id/TextViewLower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Use Lower"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/TextViewUpper"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewUpper" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonLower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewLower"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
+        app:layout_constraintTop_toTopOf="@+id/TextViewLower" />
+
+    <TextView
+        android:id="@+id/TextViewDigits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Use Lower"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/TextViewLower"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewLower" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonDigits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewDigits"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
+        app:layout_constraintTop_toTopOf="@+id/TextViewDigits" />
+
+    <TextView
+        android:id="@+id/TextViewSymbols"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Use Lower"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/TextViewDigits"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewDigits" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonSymbols"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewSymbols"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
+        app:layout_constraintTop_toTopOf="@+id/TextViewSymbols" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Generate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSymbols" />
+
+    <TextView
+        android:id="@+id/textViewOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Output:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/TextViewSymbols"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/textViewPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:text="Output:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewOutput"
+        app:layout_constraintStart_toEndOf="@+id/textViewOutput"
+        app:layout_constraintTop_toTopOf="@+id/textViewOutput"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="84dp"
+        android:src="@drawable/copybutton"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPass"
+        app:layout_constraintStart_toEndOf="@+id/textViewPass"
+        app:layout_constraintTop_toTopOf="@+id/textViewPass"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
