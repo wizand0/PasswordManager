@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ru.wizand.passwordmanager.MainActivity;
+//import ru.wizand.passwordmanager.MainActivity;
 import ru.wizand.passwordmanager.MainScreenActivity;
 import ru.wizand.passwordmanager.R;
 import ru.wizand.passwordmanager.db.entity.Password;
@@ -21,7 +21,7 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
     // 1 - Variables
     private Context context;
     private ArrayList<Password> passwordArrayList;
-    private MainScreenActivity mainActivity;
+    private MainScreenActivity mainMainScreenActivity;
 
     // 2 - ViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -41,10 +41,10 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
         }
     }
 
-    public PasswordsAdapter(Context context, ArrayList<Password> passwords, MainScreenActivity mainActivity) {
+    public PasswordsAdapter(Context context, ArrayList<Password> passwords, MainScreenActivity mainMainScreenActivity) {
         this.context = context;
         this.passwordArrayList = passwords;
-        this.mainActivity = mainActivity;
+        this.mainMainScreenActivity = mainMainScreenActivity;
     }
 
 
@@ -59,9 +59,9 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Password password = passwordArrayList.get(position);
-
         holder.name.setText(password.getName());
         holder.url.setText(password.getUrl());
+//        holder.login.setText(password.getLogin());
         holder.login.setText(password.getLogin());
         holder.password.setText(password.getPassword());
         holder.additional.setText(password.getAdditional());
@@ -69,11 +69,9 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.addAndEditPasswords(true, password, position);
+                mainMainScreenActivity.addAndEditPasswords(true, password, position);
             }
         });
-
-
 
     }
 

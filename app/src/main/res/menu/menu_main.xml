@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.wizand.passwordmanager.MainActivity">
+    tools:context="ru.wizand.passwordmanager.MainScreenActivity">
 
     <item
         android:id="@+id/action_settings"

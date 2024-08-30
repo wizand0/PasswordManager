@@ -44,17 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize SharedPreferences
 
-
         prefs = getSharedPreferences("ru.wizand.passwordmanager", MODE_PRIVATE);
 //        editor = prefs.edit();
 
         title = findViewById(R.id.new_password_title);
-
         btn = findViewById(R.id.btn);
-
-
-
-
 
         // Checking first launch
         //First launch
@@ -65,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
             //и после действия записывам false в переменную firstrun
             //Итого при следующих запусках этот код не вызывается.
 
-
 //            salt = "4ooMz5/R/xl8df9Iife5GWmBuYaqBa54ESgTnZUOpkgNWKQ82i8OEMqoK/UwfGx8+DaRgCjidmqHYcCeL2OG3SqWjDAqukJRWCAAiBZGUGH6FdB4VqzTrg2Gp9Tbu/rbgt4tUflbPv9qQZ4C4aYs0hZBIKIguhuHqXybl0+ZvzQ=";
-
 
             title.setText("Registration");
 
@@ -82,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
                     inputMasterPass = findViewById(R.id.password);
                     userPass = inputMasterPass.getText().toString();
 
-
-
-
                     try {
                         byte[] saltByte = AesCbcWithIntegrity.generateSalt();
 
@@ -95,17 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     prefs.edit().putString("salt", salt).apply();
-
-
                     prefs.edit().putBoolean("firstrun", false).apply();
 
                     String pass = encryptingKey(userPass, salt);
-
-
                     prefs.edit().putString("key", pass);
-
-
-
 
                     register(userPass, pass);
                     isLoggedIn = true;
@@ -117,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             Log.i("testing_second", "testing_second");
             String getSalt = prefs.getString("salt", "");
+            Log.i("testing_second_salt", getSalt);
             title.setText("Login");
 
             btn.setText("Login!");
@@ -135,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.i("testing_userLogin", userLogin);
 
                     userPass = inputMasterPass.getText().toString();
-                    Log.i("testing_userPass", userPass);
+
                     salt = prefs.getString("salt", "");
-                    Log.i("testing_salt", salt);
+
 
 
 
@@ -163,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     private void login(String pass){
         // Storing session data
         String EncrpPass = encryptingKey(pass, salt);
+
 
         String token = prefs.getString("token", "");
 
