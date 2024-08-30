@@ -28,6 +28,7 @@ v1.1 no filds encryption. Basic functionality
 - RecyclerView
 
 ## Versions
+v1.2 - refactoring
 
 v1.1 - authorization, login activity, encryption for passsword
 
