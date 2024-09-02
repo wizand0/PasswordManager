@@ -7,6 +7,13 @@ Initial start. Authorization
 
 v1.2.5 no filds encryption. + PasswordGenerator with copy password to clipboard
 
+## Scrteenshots
+________________________________________________________________________________________________________________________
+|![screenshot](screenshot1.png)|![screenshot](screenshot2.png)|![screenshot](screenshot3.png)|![screenshot](screenshot4.png)|
+________________________________________________________________________________________________________________________
+
+![screenshot](screenshot.png)
+
 ## TODO
 - ~~User authorization~~
 - ~~salt in method~~
