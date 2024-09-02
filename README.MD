@@ -9,9 +9,13 @@ v1.2.5 no filds encryption. + PasswordGenerator with copy password to clipboard
 
 ## Screenshots
 
-Logo           |         Recycler view          |        Edit pass in DB         |  Password generator             
-:-------------------------:|:------------------------------:|:------------------------------:|:-------------------------:
-![screenshot](screenshot4.png)  | ![screenshot](screenshot3.png) | ![screenshot](screenshot2.png) |  ![screenshot](screenshot1.png)
+Logo           |         Recycler view
+:-------------------------:|:------------------------------:
+![screenshot](screenshot4.png)  | ![screenshot](screenshot3.png)
+
+Edit pass in DB         |  Password generator
+:-------------------------:|:------------------------------:
+![screenshot](screenshot2.png) |  ![screenshot](screenshot1.png)
 
 ## TODO
 - ~~User authorization~~
