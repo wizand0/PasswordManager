@@ -428,14 +428,12 @@ public class MainScreenActivity extends AppCompatActivity {
 //            CreateContact("Mark Zuker", "mark_zuker@facebook.com");
 //            CreateContact("Satushi Namk","satushi@bitcoin.com");
 //            DisplayAllContactInBackGround();
-            Log.i("TAG","Database has been Created");
         }
 
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
 
-            Log.i("TAG","Database has been Opened");
         }
     };
 

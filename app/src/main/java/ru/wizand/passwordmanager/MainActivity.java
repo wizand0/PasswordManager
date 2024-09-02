@@ -97,9 +97,8 @@ public class MainActivity extends AppCompatActivity {
         }
         //Other launches
         else{
-            Log.i("testing_second", "testing_second");
+
             String getSalt = prefs.getString("salt", "");
-            Log.i("testing_second_salt", getSalt);
             title.setText("Login");
 
             btn.setText("Login!");
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
 
-//                    Log.i("testing_userLogin", userLogin);
+
 
                     userPass = inputMasterPass.getText().toString();
 

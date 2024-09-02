@@ -5,7 +5,7 @@ The application is completely offline and does not require permissions to access
 
 Initial start. Authorization
 
-v1.2.5 no filds encryption. + PasswordGenerator with copy password to clipboard
+v1.2.6 no filds encryption. Min SDK 28. PasswordGenerator with copy password to clipboard
 
 ## Screenshots
 
@@ -45,7 +45,8 @@ Edit pass in DB         |  Password generator
 java-aes-crypto - https://github.com/tozny
 
 ## Versions
-- v1.2.5 no filds encryption. + PasswordGenerator with copy password to clipboard
+- v1.2.6 - min SDK to 28 (Android Pie)
+- v1.2.5 - no filds encryption. + PasswordGenerator with copy password to clipboard
 - v1.2 - refactoring
 - v1.1 - authorization, login activity, encryption for passsword
 - v0.8b - initial activation

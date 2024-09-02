@@ -95,6 +95,14 @@ public class PassGenerator extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     lengthPass = 6;
                 }
+                if (lengthPass > 20) {
+                    lengthPass = 20;
+                    Toast.makeText(getApplicationContext(), "Enter the correct length for password", Toast.LENGTH_SHORT).show();
+                }
+                else if(lengthPass < 1) {
+                    lengthPass = 6;
+                    Toast.makeText(getApplicationContext(), "Enter the length for password", Toast.LENGTH_SHORT).show();
+                }
 
 
 
@@ -128,7 +136,7 @@ public class PassGenerator extends AppCompatActivity {
 
 
                 else if(lengthPass == 0) {
-                    Toast.makeText(getApplicationContext(), "Choose the length for password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Enter the length for password", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     outputPass = generatePassword(lengthPass,

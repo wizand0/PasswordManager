@@ -39,7 +39,6 @@ class EncryptionLibrary {
     public static String generatingSalt() throws GeneralSecurityException {
         String salt = "";
         salt = (String)saltString(generateSalt());
-        Log.i("testing_input_salt", salt);
 
         return salt;
     }
