@@ -17,8 +17,8 @@ android {
     }
     buildTypes {
         production {
-            applicationIdSuffix '2'
-            versionNameSuffix '1.2.2'
+            applicationIdSuffix '3'
+            versionNameSuffix '1.2.5'
         }
     }
 

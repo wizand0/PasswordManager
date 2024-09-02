@@ -7,33 +7,56 @@
     android:layout_height="match_parent"
     tools:context=".PassGenerator">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#A5C4F4"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <TextView
-        android:id="@+id/titlePassGenerator"
+        android:id="@+id/textViewTitlePassGenerator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:text="Password Generator"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <TextView
         android:id="@+id/textViewLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="44dp"
         android:text="Length"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlePassGenerator" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitlePassGenerator" />
 
     <EditText
+        android:id="@+id/EditViewLenght"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:hint="Enter the length"
+        android:inputType="number"
+        android:hint="Enter the length (1-99)"
+        android:maxLength="2"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewLength"
         app:layout_constraintStart_toEndOf="@+id/textViewLength"
@@ -88,13 +111,13 @@
         app:layout_constraintStart_toStartOf="@+id/TextViewLower"
         app:layout_constraintTop_toBottomOf="@+id/TextViewLower" />
 
+
     <ToggleButton
-        android:id="@+id/toggleButtonDigits"
+        android:id="@+id/toggleDigits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
         app:layout_constraintBottom_toBottomOf="@+id/TextViewDigits"
-        app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonLower"
         app:layout_constraintTop_toTopOf="@+id/TextViewDigits" />
 
     <TextView
@@ -113,14 +136,14 @@
         android:layout_height="wrap_content"
         android:text="ToggleButton"
         app:layout_constraintBottom_toBottomOf="@+id/TextViewSymbols"
-        app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonLower"
         app:layout_constraintTop_toTopOf="@+id/TextViewSymbols" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="Generate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -131,33 +154,31 @@
         android:id="@+id/textViewOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Output:"
+        android:layout_marginTop="20dp"
+        android:text="Output password:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/TextViewSymbols"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
-        android:id="@+id/textViewPass"
+        android:id="@+id/textViewGeneratedPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginTop="20dp"
         android:text="Output:"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewOutput"
-        app:layout_constraintStart_toEndOf="@+id/textViewOutput"
-        app:layout_constraintTop_toTopOf="@+id/textViewOutput"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/textViewOutput"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOutput" />
 
     <ImageView
+        android:id="@+id/imageCopuButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="84dp"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/copybutton"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewPass"
-        app:layout_constraintStart_toEndOf="@+id/textViewPass"
-        app:layout_constraintTop_toTopOf="@+id/textViewPass"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewOutput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewOutput" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

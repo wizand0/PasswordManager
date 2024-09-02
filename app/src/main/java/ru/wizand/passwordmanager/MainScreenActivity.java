@@ -413,8 +413,8 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
-    }
 
+}
     // CallBacks
     RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
         @Override
