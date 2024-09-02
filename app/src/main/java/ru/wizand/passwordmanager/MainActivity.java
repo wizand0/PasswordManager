@@ -11,14 +11,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,23 +72,30 @@ public class MainActivity extends AppCompatActivity {
                     inputMasterPass = findViewById(R.id.password);
                     userPass = inputMasterPass.getText().toString();
 
-                    try {
-                        byte[] saltByte = AesCbcWithIntegrity.generateSalt();
+                    if (userLogin.isEmpty() || userPass.isEmpty()){
+                        recreate();
+                    }
+                    else{
+                        try {
+                            byte[] saltByte = AesCbcWithIntegrity.generateSalt();
 
-                        salt = (String)saltString(saltByte);
+                            salt = (String)saltString(saltByte);
 
-                    } catch (GeneralSecurityException e) {
-                        throw new RuntimeException(e);
+                        } catch (GeneralSecurityException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        prefs.edit().putString("salt", salt).apply();
+                        prefs.edit().putBoolean("firstrun", false).apply();
+
+                        String pass = encryptingKey(userPass, salt);
+                        prefs.edit().putString("key", pass);
+
+                        register(userPass, pass);
+                        isLoggedIn = true;
                     }
 
-                    prefs.edit().putString("salt", salt).apply();
-                    prefs.edit().putBoolean("firstrun", false).apply();
 
-                    String pass = encryptingKey(userPass, salt);
-                    prefs.edit().putString("key", pass);
-
-                    register(userPass, pass);
-                    isLoggedIn = true;
                 }
             });
 
@@ -121,10 +126,15 @@ public class MainActivity extends AppCompatActivity {
                     salt = prefs.getString("salt", "");
 
 
+                    if(userPass.isEmpty()){
+                        recreate();
+                    }
+                    else {
+                        login(userPass);
+                    }
 
 
 
-                    login(userPass);
 
                 }
             });

@@ -1,22 +1,14 @@
 package ru.wizand.passwordmanager;
 
-import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateKeyFromPassword;
-import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateSalt;
-import static ru.wizand.passwordmanager.AesCbcWithIntegrity.saltString;
-
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,9 +29,7 @@ import android.content.SharedPreferences;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -59,17 +49,20 @@ public class MainScreenActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+
 
         prefs = getSharedPreferences("ru.wizand.passwordmanager", MODE_PRIVATE);
 
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My passwords");
+        getSupportActionBar().setTitle(R.string.my_passwords);
 
         // RecyclerView
         recyclerView = findViewById(R.id.recycler_view_passwords);
@@ -142,7 +135,7 @@ public class MainScreenActivity extends AppCompatActivity {
         final EditText passwordPassword = view.findViewById(R.id.password);
         final EditText passwordAdditional = view.findViewById(R.id.additional);
 
-        passwordTitle.setText(!isUpdated ? "Add New Password" : "Edit Password");
+        passwordTitle.setText(!isUpdated ? getString(R.string.add_new_password) : getString(R.string.edit_password));
 
         if (isUpdated && password != null){
             newPassword.setText(password.getName());
@@ -153,13 +146,13 @@ public class MainScreenActivity extends AppCompatActivity {
         }
 
         alerDialogBuilder.setCancelable(false)
-                .setPositiveButton(isUpdated ? "Update" : "Save", new DialogInterface.OnClickListener() {
+                .setPositiveButton(isUpdated ? getString(R.string.update) : "Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 })
-                .setNegativeButton("Delete",
+                .setNegativeButton(R.string.delete,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -180,7 +173,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(newPassword.getText().toString())){
-                    Toast.makeText(MainScreenActivity.this, "Please Enter a Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainScreenActivity.this, R.string.please_enter_a_name, Toast.LENGTH_SHORT).show();
 
                     return;
                 }else{
@@ -384,11 +377,24 @@ public class MainScreenActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings){
+            Toast.makeText(this, R.string.under_constraction, Toast.LENGTH_SHORT).show();
             return true;
         }
 
+        else if (id ==R.id.main) {
+            Toast.makeText(this, R.string.you_selected_main_section, Toast.LENGTH_SHORT).show();
+            Class ourClass  = null;
+            try {
+                ourClass = Class.forName("ru.wizand.passwordmanager.MainScreenActivity");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            Intent j = new Intent(getApplicationContext(), ourClass);
+            startActivity(j);
+        }
+
         else if (id ==R.id.generator) {
-            Toast.makeText(this, "R.string.you_selected_about_section", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.you_press_password_generator, Toast.LENGTH_SHORT).show();
             Class ourClass  = null;
             try {
                 ourClass = Class.forName("ru.wizand.passwordmanager.PassGenerator");
@@ -400,7 +406,7 @@ public class MainScreenActivity extends AppCompatActivity {
         }
 
         else if (id ==R.id.about) {
-            Toast.makeText(this, "R.string.you_selected_about_section", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.you_selected_about_section, Toast.LENGTH_SHORT).show();
             Class ourClass  = null;
             try {
                 ourClass = Class.forName("ru.wizand.passwordmanager.About");

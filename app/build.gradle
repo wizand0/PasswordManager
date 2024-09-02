@@ -10,15 +10,15 @@ android {
         applicationId "ru.wizand.passwordmanager"
         minSdk 28
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName '1.2.7'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         production {
-            applicationIdSuffix '4'
-            versionNameSuffix '1.2.6'
+            applicationIdSuffix '5'
+            versionNameSuffix '1.2.7'
         }
     }
 
@@ -36,6 +36,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
+
+    
 
     //other
     implementation libs.appcompat

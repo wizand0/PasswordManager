@@ -9,13 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class About extends AppCompatActivity {
 
@@ -38,7 +34,7 @@ public class About extends AppCompatActivity {
         textView7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri webpage = Uri.parse("https://github.com/wizand0/VolumeAreaApp");
+                Uri webpage = Uri.parse("https://github.com/wizand0/PasswordManager");
                 Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                 startActivity(intent);
             }
@@ -47,13 +43,11 @@ public class About extends AppCompatActivity {
         textView8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri webpage = Uri.parse("https://github.com/wizand0/VolumeAreaApp");
+                Uri webpage = Uri.parse("https://github.com/wizand0/PasswordManager");
                 Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                 startActivity(intent);
             }
         });
-
-
 
     }
 
@@ -69,7 +63,20 @@ public class About extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings){
+            Toast.makeText(this, R.string.under_constraction, Toast.LENGTH_SHORT).show();
             return true;
+        }
+
+        else if (id ==R.id.main) {
+            Toast.makeText(this, R.string.you_selected_main_section, Toast.LENGTH_SHORT).show();
+            Class ourClass  = null;
+            try {
+                ourClass = Class.forName("ru.wizand.passwordmanager.MainScreenActivity");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            Intent j = new Intent(getApplicationContext(), ourClass);
+            startActivity(j);
         }
 
         else if (id ==R.id.generator) {
@@ -100,9 +107,5 @@ public class About extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-
-
-
-
 
 }

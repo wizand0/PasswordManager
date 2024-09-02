@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-//import ru.wizand.passwordmanager.MainActivity;
+
 import ru.wizand.passwordmanager.MainScreenActivity;
 import ru.wizand.passwordmanager.R;
 import ru.wizand.passwordmanager.db.entity.Password;

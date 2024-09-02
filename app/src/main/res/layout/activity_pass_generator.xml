@@ -32,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Password Generator"
-        android:textSize="32sp"
+        android:text="@string/password_generator"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="44dp"
-        android:text="Length"
-        android:textSize="25sp"
+        android:layout_marginTop="24dp"
+        android:text="@string/length"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitlePassGenerator" />
 
@@ -53,111 +53,74 @@
         android:id="@+id/EditViewLenght"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="40sp"
+        android:textSize="18sp"
         android:inputType="number"
-        android:hint="Enter the length (1-20)"
+        android:hint="@string/length_hint"
         android:maxLength="2"
-        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewLength"
         app:layout_constraintStart_toEndOf="@+id/textViewLength"
         app:layout_constraintTop_toTopOf="@+id/textViewLength" />
 
-    <TextView
-        android:id="@+id/TextViewUpper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Use Upper"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewLength"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLength" />
-
-    <ToggleButton
+    <CheckBox
         android:id="@+id/toggleButtonUpper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:text="ToggleButton"
-        app:layout_constraintBottom_toBottomOf="@+id/TextViewUpper"
-        app:layout_constraintStart_toEndOf="@+id/TextViewUpper"
-        app:layout_constraintTop_toTopOf="@+id/TextViewUpper" />
+        android:layout_marginTop="24dp"
+        android:text="@string/use_upper"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewLength"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLength" />
 
-    <TextView
-        android:id="@+id/TextViewLower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Use Lower"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/TextViewUpper"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewUpper" />
-
-    <ToggleButton
+    <CheckBox
         android:id="@+id/toggleButtonLower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        app:layout_constraintBottom_toBottomOf="@+id/TextViewLower"
+        android:layout_marginTop="20dp"
+        android:text="@string/use_lower"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/toggleButtonUpper"
-        app:layout_constraintTop_toTopOf="@+id/TextViewLower" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonUpper" />
 
-    <TextView
-        android:id="@+id/TextViewDigits"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Use Lower"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/TextViewLower"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewLower" />
-
-
-    <ToggleButton
+    <CheckBox
         android:id="@+id/toggleDigits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/TextViewDigits"
+        android:layout_marginTop="20dp"
+        android:text="@string/use_digits"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/toggleButtonLower"
-        app:layout_constraintTop_toTopOf="@+id/TextViewDigits" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonLower" />
 
-    <TextView
-        android:id="@+id/TextViewSymbols"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Use Lower"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/TextViewDigits"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewDigits" />
-
-    <ToggleButton
+    <CheckBox
         android:id="@+id/toggleButtonSymbols"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        app:layout_constraintBottom_toBottomOf="@+id/TextViewSymbols"
-        app:layout_constraintStart_toStartOf="@+id/toggleButtonLower"
-        app:layout_constraintTop_toTopOf="@+id/TextViewSymbols" />
+        android:layout_marginTop="20dp"
+        android:text="@string/use_symbols"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/toggleDigits"
+        app:layout_constraintTop_toBottomOf="@+id/toggleDigits" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Generate"
+        android:layout_marginTop="28dp"
+        android:text="@string/generate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewSymbols" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonSymbols" />
 
     <TextView
         android:id="@+id/textViewOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Output password:"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/TextViewSymbols"
+        android:text="@string/output_password"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/toggleButtonSymbols"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
@@ -165,8 +128,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Output:"
-        android:textSize="24sp"
+        android:text="@string/output"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textViewOutput"
         app:layout_constraintTop_toBottomOf="@+id/textViewOutput" />
 

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,28 +24,24 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class PassGenerator extends AppCompatActivity {
 
     TextView textViewTitlePassGenerator, textViewGeneratedPass;
     EditText editViewLenght;
-    ToggleButton toggleButtonUpper, toggleButtonLower, toggleButtonDigits, toggleButtonSymbols;
+    CheckBox toggleButtonUpper, toggleButtonLower, toggleButtonDigits, toggleButtonSymbols;
     Button button;
     ImageView copyButton;
+//    CheckBox checkBox;
 
     boolean useUpper, useLower, useNumbers, useSpecial;
     String toggleUpper, toggleLower, toggleDigits, toggleSymbols, passLength;
     Byte lengthPass;
     String outputPass;
+
+//    boolean isChecked;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -55,11 +52,13 @@ public class PassGenerator extends AppCompatActivity {
         // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My passwords");
+        getSupportActionBar().setTitle(R.string.my_passwords);
 
         textViewTitlePassGenerator = findViewById(R.id.textViewGeneratedPass);
 //        editViewLenght = findViewById(R.id.EditViewLenght);
         editViewLenght = (EditText)findViewById(R.id.EditViewLenght);
+
+//        checkBox = findViewById(R.id.checkBox);
 
 
         toggleButtonUpper = findViewById(R.id.toggleButtonUpper);
@@ -75,15 +74,19 @@ public class PassGenerator extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleUpper = toggleButtonUpper.getText().toString();
-//
-
-                toggleLower = toggleButtonLower.getText().toString();
-                toggleDigits = toggleButtonDigits.getText().toString();
-                toggleSymbols = toggleButtonSymbols.getText().toString();
+//                toggleUpper = toggleButtonUpper.getText().toString();
+//                toggleLower = toggleButtonLower.getText().toString();
+//                toggleDigits = toggleButtonDigits.getText().toString();
+//                toggleSymbols = toggleButtonSymbols.getText().toString();
 
                 passLength = editViewLenght.getText().toString();
 
+//                isChecked = checkBox.isChecked();
+//                Log.i("testing", "" + isChecked);
+                useUpper = toggleButtonUpper.isChecked();
+                useLower = toggleButtonLower.isChecked();
+                useNumbers = toggleButtonDigits.isChecked();
+                useSpecial = toggleButtonSymbols.isChecked();
 
                 Integer i;
                 try {
@@ -91,52 +94,28 @@ public class PassGenerator extends AppCompatActivity {
                     // do something with i
                 } catch (NumberFormatException e) {
                     // log and do something else like notify the user or set i to a default value
-                    Toast.makeText(getApplicationContext(), "Enter the password's length",
+                    Toast.makeText(getApplicationContext(), R.string.enter_the_password_s_length,
                             Toast.LENGTH_SHORT).show();
                     lengthPass = 6;
                 }
                 if (lengthPass > 20) {
                     lengthPass = 20;
-                    Toast.makeText(getApplicationContext(), "Enter the correct length for password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_the_correct_length_for_password, Toast.LENGTH_SHORT).show();
                 }
                 else if(lengthPass < 1) {
                     lengthPass = 6;
-                    Toast.makeText(getApplicationContext(), "Enter the length for password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_the_length_for_password, Toast.LENGTH_SHORT).show();
                 }
 
 
-
-                if (toggleUpper.equals("ON")){
-                    useUpper = true;
-                } else {
-                    useUpper = false;
-                }
-                if (toggleLower.equals("ON")){
-                    useLower = true;
-                }
-                else {
-                    useLower = false;
-                }
-                if (toggleDigits.equals("ON")){
-                    useNumbers = true;
-                }
-                else {
-                    useNumbers = false;
-                }
-                if (toggleSymbols.equals("ON")){
-                    useSpecial = true;
-                }
-                else {
-                    useSpecial = false;
-                }
 
                 if(!useUpper && !useLower && !useNumbers && !useSpecial) {
-                    Toast.makeText(getApplicationContext(), "Choose symbols for password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.choose_symbols_for_password, Toast.LENGTH_SHORT).show();
                 }
 
 
                 else if(lengthPass == 0) {
-                    Toast.makeText(getApplicationContext(), "Enter the length for password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_the_length_for_password, Toast.LENGTH_SHORT).show();
                 }
                 else{
                     outputPass = generatePassword(lengthPass,
@@ -149,8 +128,6 @@ public class PassGenerator extends AppCompatActivity {
 
             }
         });
-
-
 
         //set the ontouch listener
         copyButton.setOnTouchListener(new View.OnTouchListener() {
@@ -190,7 +167,7 @@ public class PassGenerator extends AppCompatActivity {
 
                 ClipData clip = ClipData.newPlainText("arbitrary label",outputPass);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "Copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.copied, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -207,11 +184,24 @@ public class PassGenerator extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings){
+            Toast.makeText(this, R.string.under_constraction, Toast.LENGTH_SHORT).show();
             return true;
         }
 
+        else if (id ==R.id.main) {
+            Toast.makeText(this, R.string.you_selected_main_section, Toast.LENGTH_SHORT).show();
+            Class ourClass  = null;
+            try {
+                ourClass = Class.forName("ru.wizand.passwordmanager.MainScreenActivity");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            Intent j = new Intent(getApplicationContext(), ourClass);
+            startActivity(j);
+        }
+
         else if (id ==R.id.generator) {
-            Toast.makeText(this, "R.string.you_selected_about_section", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.you_press_password_generator, Toast.LENGTH_SHORT).show();
             Class ourClass  = null;
             try {
                 ourClass = Class.forName("ru.wizand.passwordmanager.PassGenerator");
@@ -223,7 +213,7 @@ public class PassGenerator extends AppCompatActivity {
         }
 
         else if (id ==R.id.about) {
-            Toast.makeText(this, "R.string.you_selected_about_section", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.you_selected_about_section, Toast.LENGTH_SHORT).show();
             Class ourClass  = null;
             try {
                 ourClass = Class.forName("ru.wizand.passwordmanager.About");

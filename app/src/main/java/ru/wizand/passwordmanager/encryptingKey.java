@@ -4,10 +4,7 @@ import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateKeyFromPassw
 import static ru.wizand.passwordmanager.AesCbcWithIntegrity.generateSalt;
 import static ru.wizand.passwordmanager.AesCbcWithIntegrity.saltString;
 
-import android.util.Log;
-
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 
 class EncryptionLibrary {
 
