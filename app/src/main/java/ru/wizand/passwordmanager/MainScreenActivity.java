@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +37,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ru.wizand.passwordmanager.adapter.PasswordsAdapter;
+import ru.wizand.passwordmanager.adapter.PasswordsSearchAdapter;
+import ru.wizand.passwordmanager.db.PasswordDAO;
 import ru.wizand.passwordmanager.db.PasswordsAppDatabase;
 import ru.wizand.passwordmanager.db.entity.Password;
 
@@ -42,20 +47,25 @@ public class MainScreenActivity extends AppCompatActivity {
 
     // Variables
     private PasswordsAdapter passwordsAdapter;
+    private PasswordsSearchAdapter passwordsSearchAdapter;
+
     private ArrayList<Password> passwordArrayList = new ArrayList<>();
+
+    private ArrayList<Password> passwordArrayListSearch = new ArrayList<>();
+
     private RecyclerView recyclerView;
     private PasswordsAppDatabase passwordsAppDatabase;
     FloatingActionButton fab;
     SharedPreferences prefs;
-
+    SearchView mySearchView;
+    String searchWords;
+    String searchWords1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-
 
         prefs = getSharedPreferences("ru.wizand.passwordmanager", MODE_PRIVATE);
 
@@ -66,7 +76,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
         // RecyclerView
         recyclerView = findViewById(R.id.recycler_view_passwords);
-
 
         // Database
         passwordsAppDatabase = Room.databaseBuilder(
@@ -81,6 +90,28 @@ public class MainScreenActivity extends AppCompatActivity {
         // Displaying All Contacts List
         DisplayAllPasswordsInBackGround();
 
+        mySearchView = findViewById(R.id.mySearchView);
+
+        mySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String searchWords) {
+                Log.i("testing_search", searchWords);
+                Toast.makeText(MainScreenActivity.this, "You searching:" + "\"" + searchWords + "\"",Toast.LENGTH_LONG).show();
+                SearchPasswordInBackGround(searchWords);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String searchWords) {
+                if(searchWords.isEmpty()) {
+                    DisplayAllPasswordsInBackGround();
+                }
+                else{
+                    SearchPasswordInBackGround(searchWords);
+                }
+                return false;
+            }
+        });
 
         passwordsAdapter = new PasswordsAdapter(this, passwordArrayList, MainScreenActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -102,7 +133,6 @@ public class MainScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -150,6 +180,12 @@ public class MainScreenActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                })
+                .setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
                     }
                 })
                 .setNegativeButton(R.string.delete,
@@ -247,6 +283,12 @@ public class MainScreenActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
+
 
 
     private void UpdatePassword(String name, String url, String login, String password, String additional, int position) {
@@ -356,13 +398,33 @@ public class MainScreenActivity extends AppCompatActivity {
                         passwordsAdapter.notifyDataSetChanged();
                     }
                 });
-
-
             }
         });
-
     }
 
+    public void SearchPasswordInBackGround(String searchString){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Background Work
+
+                passwordArrayList.clear();
+                passwordArrayList.addAll(passwordsAppDatabase.getPasswordDAO().getSearchedPasswords(searchString));
+                Log.i("testing_array", passwordArrayListSearch.toString());
+
+                // Executed after the background work had finished
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        passwordsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
 
 
     // Menu bar
@@ -442,7 +504,4 @@ public class MainScreenActivity extends AppCompatActivity {
 
         }
     };
-
-
-
 }

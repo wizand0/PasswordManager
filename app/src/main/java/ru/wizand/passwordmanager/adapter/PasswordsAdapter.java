@@ -21,7 +21,9 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
     // 1 - Variables
     private Context context;
     private ArrayList<Password> passwordArrayList;
+    private ArrayList<Password> passwordArrayListSearch;
     private MainScreenActivity mainMainScreenActivity;
+    private String searchString;
 
     // 2 - ViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -46,6 +48,8 @@ public class PasswordsAdapter extends RecyclerView.Adapter<PasswordsAdapter.MyVi
         this.passwordArrayList = passwords;
         this.mainMainScreenActivity = mainMainScreenActivity;
     }
+
+
 
 
     @NonNull

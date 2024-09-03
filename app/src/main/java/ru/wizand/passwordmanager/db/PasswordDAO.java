@@ -29,4 +29,10 @@ public interface PasswordDAO {
     public Password getPassword(long passwordId);
 
 
+@Query("SELECT * FROM passwords WHERE password_name LIKE '%' || :search || '%' " +
+        "OR password_url LIKE '%' || :search || '%' " +
+        "OR password_additional LIKE '%' || :search || '%'")
+    public List<Password> getSearchedPasswords(String search);
+
+
 }

@@ -22,6 +22,11 @@
             android:background="#A5C4F4"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <SearchView
+            android:id="@+id/mySearchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

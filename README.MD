@@ -5,7 +5,7 @@ The application is completely offline and does not require permissions to access
 
 Initial start. Authorization
 
-v1.2.7 Day/Night theme
+v1.2.8 Day/Night theme, Full Search
 
 ## Screenshots
 
@@ -45,6 +45,7 @@ Edit pass in DB         |  Password generator
 java-aes-crypto - https://github.com/tozny
 
 ## Versions
+- v1.2.8 Day/Night theme, Full Search
 - v1.2.7 - Day/Night theme
 - v1.2.6 - min SDK to 28 (Android Pie)
 - v1.2.5 - no filds encryption. + PasswordGenerator with copy password to clipboard
